@@ -1,0 +1,25 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "mental-health-app-f4e0a",
+          "appId": "1:175561885327:android:7e12a7fb4a554adbc292fa",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "mental-health-app-f4e0a",
+          "configurations": {
+            "android": "1:175561885327:android:7e12a7fb4a554adbc292fa",
+            "ios": "1:175561885327:ios:2b2f5b95fdd97dfcc292fa",
+            "macos": "1:175561885327:ios:2b2f5b95fdd97dfcc292fa",
+            "web": "1:175561885327:web:a5c776cd5896c91bc292fa",
+            "windows": "1:175561885327:web:b72c8c91a04360f0c292fa"
+          }
+        }
+      }
+    }
+  }
+}
