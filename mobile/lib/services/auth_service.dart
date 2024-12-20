@@ -26,7 +26,8 @@ class Auth extends _$Auth {
 
 @riverpod
 Future<bool> isSignedIn(IsSignedInRef ref) async {
-  final user = ref.watch(authProvider).when(
-      data: (flag) => flag, error: (_, __) => false, loading: () => false);
-  return user != null;
+  return ref.watch(authProvider).when(
+      data: (user) => user != null,
+      error: (_, __) => false,
+      loading: () => false);
 }

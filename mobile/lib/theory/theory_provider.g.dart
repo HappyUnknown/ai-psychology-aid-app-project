@@ -6,7 +6,7 @@ part of 'theory_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$theoryHash() => r'3c78bb1acdd900b35cbbdaf1ce2b21ff8487d6b2';
+String _$theoryHash() => r'7bced03bc40696618f2c378809e87cae971c485b';
 
 /// See also [Theory].
 @ProviderFor(Theory)

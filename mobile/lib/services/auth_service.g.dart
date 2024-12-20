@@ -6,7 +6,7 @@ part of 'auth_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$isSignedInHash() => r'5bd48e83c2ab57fa9890daa90dea84b40ba58c8f';
+String _$isSignedInHash() => r'5535025486c856a5a02605d15e4286d3be58553d';
 
 /// See also [isSignedIn].
 @ProviderFor(isSignedIn)
