@@ -1,4 +1,4 @@
-package com.example.mental_health_app
+package com.mha.mental_health_app
 
 import io.flutter.embedding.android.FlutterActivity
 

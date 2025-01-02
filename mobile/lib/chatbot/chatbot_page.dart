@@ -193,7 +193,7 @@ class __TextAreaWidgetStateState extends ConsumerState<_TextAreaWidgetState> {
                           // });
                         }
                       },
-                      icon: Icon(IconData(0xf57e, fontFamily: 'MaterialIcons')))
+                      icon: const Icon(IconData(0xf57e, fontFamily: 'MaterialIcons')))
                   : null,
             ),
           ],
