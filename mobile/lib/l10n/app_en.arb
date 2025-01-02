@@ -1,0 +1,29 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+
+  "chatBot": "ChatBot",
+  "@chatBot": {
+    "description": "Page with a chatbot that provides mental help"
+  },
+
+  "theory": "Theory",
+  "@theory": {
+    "description": "Page with a theory"
+  },
+
+  "support": "Support",
+  "@support": {
+    "description": "Page with support number and other info"
+  },
+
+  "signIn": "SignIn",
+
+  "@signIn": {
+    "description": "Page with Sign In"
+  }
+
+}
+
