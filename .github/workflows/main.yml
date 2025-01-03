@@ -12,9 +12,6 @@ jobs:
     name: Build & Release
     runs-on: ubuntu-latest
 
-    container:
-      image: cirrusci/flutter:latest
-
     defaults:
       run:
         working-directory: ./mobile
@@ -25,6 +22,11 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
+
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.22.2'
+          channel: 'beta'
       - run: dart pub upgrade --major-versions
           
       - name: Get dependencies
