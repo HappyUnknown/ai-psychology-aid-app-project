@@ -1,0 +1,28 @@
+on: 
+  push: 
+    branches: 
+      - main
+      - master
+      - cicd
+name: "Build & Release"
+jobs:
+  build: 
+    name: Build & Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with: 
+          java-version: '12.x'
+      - run: cd mobile/
+      - uses: subosito/flutter-action@v1
+        with: 
+          flutter-version: '3.22.0'
+      - run: flutter pub get
+      - run: flutter pub run build_runner build -d
+      - name: Push to Google Play
+      - uses: subosito/flutter-action@v1
+        with: 
+          flutter-version: '3.22.0'
+      - run: flutter build appbundle
+      
