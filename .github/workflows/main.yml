@@ -25,6 +25,7 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
+      - run: dart pub upgrade --major-versions
           
       - name: Get dependencies
         run: flutter pub get
