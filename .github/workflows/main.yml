@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - master
-      - cicd
+      - cicd 
 
 jobs:
   build:
@@ -49,14 +49,13 @@ jobs:
       - name: Run build runner
         run: flutter pub run build_runner build -d
 
-      - name: Upload service account
-          uses: KevinRohn/github-action-upload-play-store@v1.0.0
-          with:
-            service_account_json: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-            package_name: "com.mha.mental_health_app"
-            aab_file_path: "./build/outputs/bundle/release/app-release.aab"
-            track: "internal"
-            release_status: "draft"
+      - uses: KevinRohn/github-action-upload-play-store@v1.0.0
+        with:
+          service_account_json: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          package_name: "com.mha.mental_health_app"
+          aab_file_path: "./build/outputs/bundle/release/app-release.aab"
+          track: "internal"
+          release_status: "draft"
 
       - name: Remove Secret files from the machine
           run: |
