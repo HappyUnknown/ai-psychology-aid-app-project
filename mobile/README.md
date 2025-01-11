@@ -1,8 +1,32 @@
 # mental_health_app
 
-A new Flutter project.
+A Flutter project for a mental health app.
 
 ## Getting Started
+
+In order to compile this project make sure that you have flutter installed.
+once you are done navigate to the root folder of the project, particularly in *mobile* folder
+
+'''
+> flutter pub get
+'''
+
+This file contains files that will be generated, so please run thi command before building
+
+'''
+> dart run build_runner build -d
+'''
+
+Instead of command above, you can use this command in order to continuosly build once you changed the relevant files.
+
+'''
+> dart run build_runner watch -d
+'''
+
+Otherwise you will need to run dart run build_runner build -d everytime you changed the relevant code
+
+
+
 
 This project is a starting point for a Flutter application.
 

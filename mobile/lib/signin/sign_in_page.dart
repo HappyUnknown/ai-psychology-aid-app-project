@@ -1,6 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mental_health_app/app_drawer.dart';
+import 'package:mental_health_app/routes/app_router.dart';
 import 'package:mental_health_app/services/auth_service.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
@@ -32,8 +35,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isSignedIn = ref.watch(isSignedInProvider).when(
-        data: (flag) => flag, error: (_, __) => false, loading: () => false);
+    final isSignedIn = ref.watch(authProvider).when(
+        data: (flag) => flag != null,
+        error: (_, __) => false,
+        loading: () => false);
 
     late List<Widget> listView;
 
@@ -66,6 +71,35 @@ class _SignInPageState extends ConsumerState<SignInPage> {
           },
           child: const Text("Sign In", style: TextStyle(color: Colors.black)),
         ),
+        Text.rich(
+          textAlign: TextAlign.center,
+          TextSpan(
+            text: "Don't have an account yet?",
+            children: [
+              TextSpan(
+                text: " Create one here",
+                style: TextStyle(color: Colors.blue),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    print('creating a new account');
+                    // find a new option
+                    context.pushNamed(AppRoutes.createAccount.name);
+                  },
+              )
+            ],
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        // TODO forgot password option
+
+        // TextButton(
+        //   onPressed: () {
+        //     ref.read(authProvider.notifier).login(
+        //         name: _emailController.text,
+        //         password: _passwordController.text);
+        //   },
+        //   child: ),
+        // ),
       ];
     }
 
@@ -85,10 +119,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 class PasswordTextField extends StatefulWidget {
   const PasswordTextField({
     super.key,
+    this.labelText = "Password",
     required TextEditingController passwordController,
   }) : _passwordController = passwordController;
 
   final TextEditingController _passwordController;
+  final String labelText;
 
   @override
   State<PasswordTextField> createState() => _PasswordTextFieldState();
@@ -103,7 +139,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       obscureText: !_passwordVisible,
       controller: widget._passwordController,
       decoration: InputDecoration(
-          labelText: "Password",
+          labelText: widget.labelText,
           suffixIcon: IconButton(
             icon: Icon(
                 _passwordVisible ? Icons.visibility_off : Icons.visibility),

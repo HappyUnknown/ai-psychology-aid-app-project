@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 part 'auth_service.g.dart';
 
 @riverpod
@@ -21,13 +23,40 @@ class Auth extends _$Auth {
 
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
+    ref.invalidateSelf();
   }
-}
 
-@riverpod
-Future<bool> isSignedIn(IsSignedInRef ref) async {
-  return ref.watch(authProvider).when(
-      data: (user) => user != null,
-      error: (_, __) => false,
-      loading: () => false);
+  Future<void> createAccount({
+    required String name,
+    required String role,
+    required String email,
+    required String password,
+  }) async {
+    // call into firebase to create a user with name and email
+
+    final userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+    if (userCredential.user != null) {
+      print("user signed in successful ${userCredential.additionalUserInfo}");
+
+      // do a call into firestore
+      DocumentReference doc =
+          await FirebaseFirestore.instance.collection("users").add({
+        "uid": userCredential.user!.uid,
+        "name": name,
+        "role": role,
+        "email": email,
+      });
+
+      if (doc.get() != null) {
+        // doc has been successfuly created
+        print("user has been added to firestore and allat");
+        state = AsyncValue.data(userCredential.user);
+      }
+
+      state = AsyncValue.data(userCredential.user);
+    } else {
+      print("user signed in failed ${userCredential.additionalUserInfo}");
+    }
+  }
 }

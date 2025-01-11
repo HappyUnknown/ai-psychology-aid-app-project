@@ -14,8 +14,8 @@ class AuthWrapper extends ConsumerStatefulWidget {
 class _AuthWrapperState extends ConsumerState<AuthWrapper> {
   @override
   Widget build(BuildContext context) {
-    return ref.watch(isSignedInProvider).when(
-        data: (flag) => flag ? widget.page : const SignInPage(),
+    return ref.watch(authProvider).when(
+        data: (user) => user!= null ? widget.page : const SignInPage(),
         error: (error, stack) => Text("there has been an error$error $stack"),
         loading: () => const CircularProgressIndicator());
   }

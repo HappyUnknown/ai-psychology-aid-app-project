@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:mental_health_app/chatbot/chatbot_page.dart';
 import 'package:mental_health_app/routes/auth_wrapper.dart';
+import 'package:mental_health_app/signin/create_account_page.dart';
 import 'package:mental_health_app/signin/sign_in_page.dart';
 import 'package:mental_health_app/support/support_page.dart';
 import 'package:mental_health_app/theory/theory_page.dart';
@@ -11,6 +12,7 @@ enum AppRoutes {
   chatbot,
   support,
   signin,
+  createAccount,
 }
 
 final GoRouter router = GoRouter(
@@ -35,6 +37,11 @@ final GoRouter router = GoRouter(
       path: '/signin',
       name: AppRoutes.signin.name,
       builder: (context, state) => const SignInPage(),
+    ),
+    GoRoute(
+      path: '/createAccountName',
+      name: AppRoutes.createAccount.name,
+      builder: (context, state) => CreateAccountPage(),
     ),
   ],
 );
