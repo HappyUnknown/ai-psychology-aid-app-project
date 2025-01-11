@@ -15,7 +15,8 @@ class ChatGptBot implements ChatBot {
 
   @override
   Future<String> respond(String userMessage) async {
-    const apiUrl = 'https://api.openai.com/v1/chat/completions';
+    print("actual service");
+    const apiUrl = 'https://ec2-16-171-53-67.eu-north-1.compute.amazonaws.com:8080/v1/chat/completions';
 
     messageLog.add({"role" : "user", "content" : userMessage});
 
@@ -24,10 +25,10 @@ class ChatGptBot implements ChatBot {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $apiKey',
+        'Authorization': 'Bearer demo',
       },
       body: jsonEncode({
-        "model": "gpt-3.5-turbo",
+        "model": "gemma2:2b",
         'messages': [
           {
             "role": "user",
@@ -93,11 +94,11 @@ class LLama implements ChatBot {
         'messages': [
           {
             "role": "user",
+            // TODO make sure this language is language dependent
             "content":
                 "You are a psychological assitant, for current soldiers, please comfort them and provide guidance. Respond to the last message with care and attention"
           },
           ...messageLog
-
         ],
         "stream": false
       },

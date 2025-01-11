@@ -8,13 +8,21 @@ part 'chatbot_model.g.dart';
 
 @riverpod
 class ChatbotModel extends _$ChatbotModel {
-  ChatBot chatBot = LLama();
+  ChatBot chatBot = ChatGptBot();
 
   @override
   Future<List<Message>> build() async {
     return [
       Message.withDate("Hello", true),
-      Message.withDate("Hi there", false)
+      Message.withDate("Hi there", false),
+      Message.withDate("Hello", true),
+      Message.withDate("Hi there", false),
+      Message.withDate("Hello", true),
+      Message.withDate("Hi there", false),
+      Message.withDate("Hello", true),
+      Message.withDate("Hi there", false),
+      Message.withDate("Helloo", true),
+      // Message.withDate("Hi thereeeee", false),
     ];
   }
 

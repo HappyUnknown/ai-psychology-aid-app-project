@@ -1,7 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mental_health_app/app_drawer.dart';
 import 'package:mental_health_app/chatbot/chatbot_model.dart';
 
@@ -33,61 +31,48 @@ class _ChatBotState extends ConsumerState<ChatBotPage> {
     super.dispose();
   }
 
-  void _scrollToBottom() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          0,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final AsyncValue<List<Message>> messages = ref.watch(chatbotModelProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text("ChatBot page"),
+        backgroundColor: Colors.grey.shade100,
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: GestureDetector(
         onTap: _focusNode.unfocus,
         child: Column(
           children: [
             Expanded(
               child: switch (messages) {
-                AsyncData(:final value) => ListView.builder(
-                    reverse: true,
-                    keyboardDismissBehavior:
-                        ScrollViewKeyboardDismissBehavior.onDrag,
-                    controller: _scrollController,
-                    itemCount: value.length,
-                    itemBuilder: (context, index) {
-                      final message = value[value.length - index - 1];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 16.0),
-                        child: Align(
-                          alignment: (message.fromChatBot
-                              ? Alignment.centerLeft
-                              : Alignment.centerRight),
-                          child: Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24),
-                              color: message.fromChatBot
-                                  ? const Color.fromARGB(255, 160, 205, 243)
-                                  : const Color.fromARGB(255, 166, 240, 168),
-                            ),
-                            child: Text(message.message),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                AsyncData(:final value) => Builder(builder: (context) {
+                    List<Widget> children = [];
+
+                    for (int i = 0; i < value.length; i++) {
+                      final Message message = value[value.length - i - 1];
+                      children.add(
+                          MessageWidget(message: message));
+                        
+                      if (i != value.length - 1 && !message.fromChatBot) {
+                        children.add(const Divider(
+                          color: Colors.grey,
+                          thickness: 1,
+                          indent: 20,
+                          endIndent: 20,
+                        ));
+                      }
+                      
+                    }
+
+                    return ListView(
+                      reverse: true,
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
+                      controller: _scrollController,
+                      children: children,
+                    );
+                  }),
                 AsyncError() =>
                   const Text('Oops, something unexpected happened'),
                 _ => const CircularProgressIndicator(),
@@ -95,6 +80,33 @@ class _ChatBotState extends ConsumerState<ChatBotPage> {
             ),
             _TextAreaWidgetState(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MessageWidget extends StatelessWidget {
+  final Message message;
+  const MessageWidget({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Align(
+        alignment: (message.fromChatBot
+            ? Alignment.centerLeft
+            : Alignment.centerRight),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            color: message.fromChatBot
+                ? Colors.transparent
+                : const Color.fromARGB(180, 195, 199, 195),
+          ),
+          child: Text(message.message),
         ),
       ),
     );
@@ -113,6 +125,7 @@ class __TextAreaWidgetStateState extends ConsumerState<_TextAreaWidgetState> {
   late TextEditingController _textController;
   late FocusNode _focusNode;
   late ScrollController _scrollController;
+  bool empty = true;
 
   @override
   void initState() {
@@ -135,7 +148,7 @@ class __TextAreaWidgetStateState extends ConsumerState<_TextAreaWidgetState> {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           0,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       }
@@ -144,40 +157,27 @@ class __TextAreaWidgetStateState extends ConsumerState<_TextAreaWidgetState> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.amberAccent,
-      width: MediaQuery.sizeOf(context).width,
-      child: Center(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(
-              width: 30,
-            ),
-            Container(
-              width: MediaQuery.sizeOf(context).width * 0.8,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: TextField(
-                controller: _textController,
-                scrollPadding: EdgeInsets.all(4.0),
-                focusNode: _focusNode,
-                minLines: 1,
-                maxLines: 5,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                decoration: const InputDecoration(
-                    hintText: "send message",
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0)),
-                onChanged: (s) => setState(() {}),
-              ),
-            ),
-            SizedBox(
-              width: 30,
-              child: _textController.text.isNotEmpty
+    return Padding(
+      // color: Colors.grey.shade400,
+      padding: EdgeInsets.only(left: 16, right: 16, bottom: 4),
+      child: Container(
+        // width: MediaQuery.sizeOf(context).width * 0.8,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: TextField(
+          textAlignVertical:
+              _textController.text.isNotEmpty ? TextAlignVertical.center : null,
+          controller: _textController,
+          scrollPadding: EdgeInsets.all(4.0),
+          focusNode: _focusNode,
+          minLines: 1,
+          maxLines: 5,
+          keyboardType: TextInputType.multiline,
+          textInputAction: TextInputAction.newline,
+          decoration: InputDecoration(
+              suffixIcon: _textController.text.isNotEmpty
                   ? IconButton(
                       onPressed: () {
                         String message = _textController.text.trim();
@@ -188,15 +188,19 @@ class __TextAreaWidgetStateState extends ConsumerState<_TextAreaWidgetState> {
                           _textController.clear();
                           _focusNode.unfocus();
                           _scrollToBottom();
-                          // setState(() {
-
-                          // });
                         }
                       },
-                      icon: const Icon(IconData(0xf57e, fontFamily: 'MaterialIcons')))
+                      icon: const Icon(
+                        IconData(0xf57e, fontFamily: 'MaterialIcons'),
+                      ),
+                    )
                   : null,
-            ),
-          ],
+              border: InputBorder.none,
+              hintText: "Message",
+              filled: false,
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0)),
+          onChanged: (s) => setState(() {}),
         ),
       ),
     );

@@ -1,1 +1,61 @@
-14
+{
+  "title": "How to Deal With Gambling",
+  "headings": [
+    {
+      "title": "Твої ігрові звички",
+      "path": "chapter1.md"
+    },
+    {
+      "title": "Порятунок",
+      "path": "chapter2.md"
+    },
+    {
+      "title": "На кого це впливає?",
+      "path": "chapter3.md"
+    },
+    {
+      "title": "Яким був ваш останній досвід гри в азартні ігри?",
+      "path": "chapter4.md"
+    },
+    {
+      "title": "Які у вас тригери азартних ігор?",
+      "path": "chapter5.md"
+    },
+    {
+      "title": "Міфи про азартні ігри",
+      "path": "chapter6.md"
+    },
+    {
+      "title": "Зв'язок з друзями",
+      "path": "chapter7.md"
+    },
+    {
+      "title": "Факти для родичів і близьких",
+      "path": "chapter8.md"
+    },
+    {
+      "title": "Наслідки для родичів",
+      "path": "chapter9.md"
+    },
+    {
+      "title": "Поширені поради родичам",
+      "path": "chapter10.md"
+    },
+    {
+      "title": "Наповніть своє життя змістовною діяльністю!",
+      "path": "chapter11.md"
+    },
+    {
+      "title": "Візьміть свої фінанси під контроль",
+      "path": "chapter12.md"
+    },
+    {
+      "title": "Запобігання рецидивам",
+      "path": "chapter13.md"
+    },
+    {
+      "title": "Що таке депресія?",
+      "path": "chapter14.md"
+    }
+  ]
+}
