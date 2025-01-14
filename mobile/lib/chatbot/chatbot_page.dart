@@ -33,10 +33,11 @@ class _ChatBotState extends ConsumerState<ChatBotPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<List<Message>> messages = ref.watch(chatbotModelProvider);
+    final AsyncValue<ConversationModel> messagesModel = ref.watch(chatbotModelProvider);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("ChatBot page"),
+        title: messagesModel.when(data: (data) => Text(data.name), error: (error, stack) => Text("there has been a problem $error $stack"), loading: () => Text("Loading...")),
         backgroundColor: Colors.grey.shade100,
       ),
       drawer: const AppDrawer(),
@@ -45,16 +46,73 @@ class _ChatBotState extends ConsumerState<ChatBotPage> {
         child: Column(
           children: [
             Expanded(
-              child: switch (messages) {
+              child: switch (messagesModel) {
                 AsyncData(:final value) => Builder(
                     builder: (context) {
+                      final messages = value.messages;
+                      if (messages.isEmpty) {
+                        return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 32),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Please write whatever you want, I am here to help",
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                                const SizedBox(height: 8),
+                                Wrap(
+                                  spacing: 4,
+                                  children: [
+                                    TextButton(
+                                      style: ButtonStyle(side:
+                                          WidgetStateProperty.resolveWith(
+                                              (state) {
+                                        return const BorderSide();
+                                      })),
+                                      onPressed: () {
+                                        print("I am not feeling well");
+                                      },
+                                      child:
+                                          const Text("I am not feeling well"),
+                                    ),
+                                    TextButton(
+                                      style: ButtonStyle(side:
+                                          WidgetStateProperty.resolveWith(
+                                              (state) {
+                                        return const BorderSide();
+                                      })),
+                                      onPressed: () {
+                                        print("Help me with something");
+                                      },
+                                      child:
+                                          const Text("Help me with something"),
+                                    ),
+                                    TextButton(
+                                      style: ButtonStyle(side:
+                                          WidgetStateProperty.resolveWith(
+                                              (state) {
+                                        return const BorderSide();
+                                      })),
+                                      onPressed: () {
+                                        print("Help me with something");
+                                      },
+                                      child: const Text(
+                                          "What resources  with something"),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ));
+                      }
+
                       List<Widget> children = [];
 
-                      for (int i = 0; i < value.length; i++) {
-                        final Message message = value[value.length - i - 1];
+                      for (int i = 0; i < messages.length; i++) {
+                        final Message message = messages[messages.length - i - 1];
                         children.add(MessageWidget(message: message));
 
-                        if (i != value.length - 1 && !message.fromChatBot) {
+                        if (i != messages.length - 1 && !message.fromChatBot) {
                           children.add(
                             const Divider(
                               color: Colors.grey,

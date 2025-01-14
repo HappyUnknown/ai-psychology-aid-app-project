@@ -60,3 +60,14 @@ class Auth extends _$Auth {
     }
   }
 }
+
+@riverpod
+String currentUid(CurrentUidRef ref) {
+  try {
+    return FirebaseAuth.instance.currentUser!.uid;
+  } catch (e) {
+    print(
+        "there has been an exception when using FirebaseAuth current user is null error: $e");
+    return "none";
+  }
+}
