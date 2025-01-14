@@ -3,14 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mental_health_app/app_drawer.dart';
 import 'package:mental_health_app/chatbot/chatbot_model.dart';
 
-class ChatBotPage extends ConsumerStatefulWidget {
-  const ChatBotPage({super.key});
+class ChatbotConversationPage extends ConsumerStatefulWidget {
+  const ChatbotConversationPage({super.key});
 
   @override
-  ConsumerState<ChatBotPage> createState() => _ChatBotState();
+  ConsumerState<ChatbotConversationPage> createState() => _ChatBotState();
 }
 
-class _ChatBotState extends ConsumerState<ChatBotPage> {
+class _ChatBotState extends ConsumerState<ChatbotConversationPage> {
   late TextEditingController _textController;
   late FocusNode _focusNode;
   late ScrollController _scrollController;
