@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mental_health_app/chatbot/chat_bot.dart';
 import 'package:mental_health_app/chatbot/chat_gpt_bot.dart';
+import 'package:mental_health_app/chatbot/conversation_model.dart';
 import 'package:mental_health_app/repository/chatbot_conversation_repository.dart';
 import 'package:mental_health_app/repository/firebase_repostiories.dart';
 import 'package:mental_health_app/services/auth_service.dart';
@@ -73,18 +74,31 @@ class ChatbotModel extends _$ChatbotModel {
     );
   }
 
-  Future<void> getFromConversationRef(DocRef collectionRef) async {
+  Future<void> getFromConversationRef(ConversationDataModel model) async {
+    final collectionRef = _conversationRepo.getConversationRef(id: model.id);
     QuerySnapshot<Object?> querySnap =
         await _conversationRepo.getMessages(collectionRef);
 
-    if (querySnap.docs.isEmpty) {
-    } else {
-      final List<Message> messages = querySnap.docs
-          .map((e) => Message.fromJson(e.data()! as Map<String, dynamic>))
-          .toList();
-      state = state.whenData((data) =>
-          data.copyWith(messages: messages, conversationRef: collectionRef));
-    }
+    print(querySnap.docs.map((e) => e.data()!));
+
+    
+
+    final List<Message> messages = querySnap.docs
+        .map((e) => Message.fromJson(e.data()! as Map<String, dynamic>))
+        .toList();
+
+    state = AsyncData(ConversationModel(
+      model.name,
+      messages,
+      conversationRef: collectionRef,
+    ));
+
+    // if (querySnap.docs.isEmpty) {
+    //   print("snapshot is empty not changing the conversation");
+
+    // } else {
+
+    // }
   }
 
   Future<void> addChatBotMessage(String answerTo) async {

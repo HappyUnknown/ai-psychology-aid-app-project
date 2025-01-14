@@ -5,16 +5,18 @@ import 'package:mental_health_app/locale_provider.dart';
 import 'package:mental_health_app/routes/app_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
+class AppDrawer extends StatefulWidget {
+  final Widget? conversations;
+  const AppDrawer({super.key, this.conversations});
 
   @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Center(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
+    final List<Widget> children = [
             TextButton(
               onPressed: () {
                 context.goNamed(AppRoutes.chatbot.name);
@@ -83,7 +85,19 @@ class AppDrawer extends StatelessWidget {
                 ),
               );
             }),
-          ],
+          ];
+
+    if (widget.conversations != null) {
+      children.add(const Divider(color: Colors.grey,));
+
+      children.add(widget.conversations!);
+
+    }
+    return Drawer(
+      child: Center(
+        child: ListView(
+          shrinkWrap: true,
+          children: children,
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mental_health_app/app_drawer.dart';
 import 'package:mental_health_app/chatbot/chatbot_model.dart';
+import 'package:mental_health_app/chatbot/conversations_list_widget.dart';
 
 class ChatBotPage extends ConsumerStatefulWidget {
   const ChatBotPage({super.key});
@@ -33,14 +34,19 @@ class _ChatBotState extends ConsumerState<ChatBotPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<ConversationModel> messagesModel = ref.watch(chatbotModelProvider);
+    final AsyncValue<ConversationModel> messagesModel =
+        ref.watch(chatbotModelProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: messagesModel.when(data: (data) => Text(data.name), error: (error, stack) => Text("there has been a problem $error $stack"), loading: () => Text("Loading...")),
+        title: messagesModel.when(
+            data: (data) => Text(data.name),
+            error: (error, stack) =>
+                Text("there has been a problem $error $stack"),
+            loading: () => Text("Loading...")),
         backgroundColor: Colors.grey.shade100,
       ),
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(conversations: ConversationsListWidget()),
       body: GestureDetector(
         onTap: _focusNode.unfocus,
         child: Column(
@@ -109,7 +115,8 @@ class _ChatBotState extends ConsumerState<ChatBotPage> {
                       List<Widget> children = [];
 
                       for (int i = 0; i < messages.length; i++) {
-                        final Message message = messages[messages.length - i - 1];
+                        final Message message =
+                            messages[messages.length - i - 1];
                         children.add(MessageWidget(message: message));
 
                         if (i != messages.length - 1 && !message.fromChatBot) {
