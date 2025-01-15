@@ -59,7 +59,7 @@ jobs:
 
       - name: Remove Secret files from the machine
           run: |
-          rm ./android/google-services.json
-          rm ./firebase.json
-          rm ./android/upload-keystore.jks
-          rm ./android/key.properties
+            rm ./android/google-services.json
+            rm ./firebase.json
+            rm ./android/upload-keystore.jks
+            rm ./android/key.properties
