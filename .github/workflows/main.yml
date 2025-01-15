@@ -51,7 +51,7 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
       - name: check contents of .dart_tool directory before builder
-        run: ls .dart_tool/
+        run: ls .dart_tool/flutter_gen/
       - name: Run build runner
         run: flutter pub run build_runner build -d
 
@@ -59,7 +59,7 @@ jobs:
         run: flutter gen-l10n
       
       - name: check contents of .dart_tool directory after builder
-        run: ls .dart_tool/
+        run: ls .dart_tool/flutter_gen/
       
       - name: Compile a bundle
         run: flutter build appbundle
