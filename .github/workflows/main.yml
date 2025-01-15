@@ -45,14 +45,21 @@ jobs:
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> ./android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ./android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> ./android/key.properties
+      - name: check contents of .dart_tool directory
+        run: ls .dart_tool/
 
       - name: Get dependencies
         run: flutter pub get
+      - name: check contents of .dart_tool directory before builder
+        run: ls .dart_tool/
       - name: Run build runner
         run: flutter pub run build_runner build -d
-        
+
       - name: Get localization package
         run: flutter gen-l10n
+      
+      - name: check contents of .dart_tool directory after builder
+        run: ls .dart_tool/
       
       - name: Compile a bundle
         run: flutter build appbundle
