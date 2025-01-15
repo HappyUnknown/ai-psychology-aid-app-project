@@ -50,6 +50,9 @@ jobs:
         run: flutter pub get
       - name: Run build runner
         run: flutter pub run build_runner build -d
+        
+      - name: Get localization package
+        run: flutter gen-l10n
       
       - name: Compile a bundle
         run: flutter build appbundle
