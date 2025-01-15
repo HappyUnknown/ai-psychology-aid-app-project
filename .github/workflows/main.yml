@@ -50,6 +50,9 @@ jobs:
         run: flutter pub get
       - name: Run build runner
         run: flutter pub run build_runner build -d
+      
+      - name: Compile a bundle
+        run: flutter build appbundle
 
       - uses: KevinRohn/github-action-upload-play-store@v1.0.0
         with:
