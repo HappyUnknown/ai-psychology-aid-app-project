@@ -60,9 +60,9 @@ jobs:
           release_status: "draft"
 
       - name: Remove Secret files from the machine
-          run: |
-            rm ./android/app/google-services.json
-            rn ./keystore_base64.txt
-            rm ./firebase.json
-            rm ./android/upload-keystore.jks
-            rm ./android/key.properties
+        run: |
+          rm ./android/app/google-services.json
+          rn ./keystore_base64.txt
+          rm ./firebase.json
+          rm ./android/upload-keystore.jks
+          rm ./android/key.properties
